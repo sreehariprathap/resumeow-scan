@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { ThemeService } from '../services/theme.service';
+import { LucideAngularModule, Moon, Info, Menu } from 'lucide-angular';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
+  imports: [LucideAngularModule],
   template: `
     <nav class="bg-card border-b border-border shadow-sm">
       <div class="container mx-auto px-4 py-3">
@@ -24,16 +26,31 @@ import { ThemeService } from '../services/theme.service';
             <!-- Theme Toggle -->
             <button
               (click)="themeService.toggleTheme()"
-              class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9"
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9"
               title="Toggle theme"
             >
-              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
+              <lucide-icon [img]="Moon" class="h-4 w-4"></lucide-icon>
+            </button>
+            
+            <!-- Info Icon -->
+            <button
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9"
+              title="Information"
+            >
+              <lucide-icon [img]="Info" class="h-4 w-4"></lucide-icon>
             </button>
 
+            <!-- Hamburger Menu Icon -->
+            <button
+              class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9"
+              title="Menu"
+            >
+              <lucide-icon [img]="Menu" class="h-4 w-4"></lucide-icon>
+            </button>
+
+
             <!-- User Menu -->
-        
+
           </div>
         </div>
       </div>
@@ -47,4 +64,7 @@ import { ThemeService } from '../services/theme.service';
 })
 export class NavbarComponent {
   public themeService = inject(ThemeService);
+  readonly Moon = Moon;
+  readonly Info = Info;
+  readonly Menu = Menu;
 }
