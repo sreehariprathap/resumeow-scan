@@ -14,10 +14,18 @@ export class ThemeService {
   }
 
   setTheme(theme: 'light' | 'dark') {
+    console.log('Setting theme to:', theme, 'isBrowser:', this.isBrowser);
     if (this.isBrowser) {
+      // Remove existing theme classes
       document.documentElement.classList.remove('light', 'dark');
+      // Add new theme class
       document.documentElement.classList.add(theme);
+      // Set data-theme attribute for DaisyUI
+      document.documentElement.setAttribute('data-theme', theme);
+      // Save to localStorage
       this.storage.setItem(this.themeKey, theme);
+      console.log('Theme applied. Current classes:', document.documentElement.className);
+      console.log('Current data-theme:', document.documentElement.getAttribute('data-theme'));
     }
   }
 
@@ -29,6 +37,7 @@ export class ThemeService {
   toggleTheme() {
     const current = this.getTheme();
     const next = current === 'light' ? 'dark' : 'light';
+    console.log('Toggling theme from', current, 'to', next);
     this.setTheme(next);
   }
 

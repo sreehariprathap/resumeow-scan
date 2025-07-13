@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ThemeService } from '../services/theme.service';
-import { LucideAngularModule, Moon, Info, Menu } from 'lucide-angular';
+import { LucideAngularModule, Moon, Sun, Info, Menu } from 'lucide-angular';
 
 @Component({
   selector: 'app-navbar',
@@ -12,29 +12,20 @@ import { LucideAngularModule, Moon, Info, Menu } from 'lucide-angular';
         <div class="flex items-center justify-between">
           <!-- Logo Section -->
           <div class="flex items-center space-x-3">
-            <div class="flex flex-col items-center p-2">
+            <div class="flex items-center space-x-2">
               <img
                 src="/Resumeow-d.png"
                 alt="ResumeOw"
-                class="h-8"
+                class="h-6"
               />
             </div>
           </div>
 
           <!-- Right Section -->
-          <div class="flex items-center space-x-4">
-            <!-- Theme Toggle -->
-            <button
-              (click)="themeService.toggleTheme()"
-              class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9"
-              title="Toggle theme"
-            >
-              <lucide-icon [img]="Moon" class="h-4 w-4"></lucide-icon>
-            </button>
-
+          <div class="flex items-center space-x-2">
             <!-- Info Icon -->
             <button
-              class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9"
+              class="btn btn-ghost btn-sm btn-circle"
               title="Information"
             >
               <lucide-icon [img]="Info" class="h-4 w-4"></lucide-icon>
@@ -42,10 +33,19 @@ import { LucideAngularModule, Moon, Info, Menu } from 'lucide-angular';
 
             <!-- Hamburger Menu Icon -->
             <button
-              class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground h-9 w-9"
+              class="btn btn-ghost btn-sm btn-circle"
               title="Menu"
             >
               <lucide-icon [img]="Menu" class="h-4 w-4"></lucide-icon>
+            </button>
+
+            <!-- Theme Toggle -->
+            <button
+              (click)="toggleTheme()"
+              class="btn btn-ghost btn-sm btn-circle"
+              title="Toggle theme"
+            >
+              <lucide-icon [img]="currentTheme === 'dark' ? Sun : Moon" class="h-4 w-4"></lucide-icon>
             </button>
 
 
@@ -65,6 +65,17 @@ import { LucideAngularModule, Moon, Info, Menu } from 'lucide-angular';
 export class NavbarComponent {
   public themeService = inject(ThemeService);
   readonly Moon = Moon;
+  readonly Sun = Sun;
   readonly Info = Info;
   readonly Menu = Menu;
+
+  get currentTheme() {
+    return this.themeService.getTheme();
+  }
+
+  toggleTheme() {
+    console.log('Theme toggle clicked, current theme:', this.currentTheme);
+    this.themeService.toggleTheme();
+    console.log('New theme:', this.themeService.getTheme());
+  }
 }

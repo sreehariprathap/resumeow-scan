@@ -1,2 +1,2 @@
 // Shared barrel exports
-export * from './shared.module';
+// Components will be exported individually as standalone components
