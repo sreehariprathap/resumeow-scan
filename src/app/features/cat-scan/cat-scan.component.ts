@@ -35,7 +35,7 @@ import { ScanResultComponent, ScanResultData } from './components/scan-result.co
       </div>
 
       <!-- Main Content -->
-      <div class="container mx-auto px-6 py-12">
+      <div class="container mx-auto px-6 ">
         <!-- Input Section -->
         <div class="max-w-6xl mx-auto">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -84,97 +84,87 @@ import { ScanResultComponent, ScanResultData } from './components/scan-result.co
           <app-scan-result [resultData]="scanResult"></app-scan-result>
         </div>
       </div>
-    </div>
-
-    <!-- How It Works Modal -->
-    <dialog id="info_modal" class="modal">
-      <div class="modal-box w-11/12 max-w-3xl">
-        <h3 class="font-bold text-lg mb-4">🐱 How Cat AI Resume Scanner Works</h3>
+    </div>    <!-- How It Works Modal -->
+    <dialog id="info_modal" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg mb-3">🐱 How Cat AI Works</h3>
 
         <!-- Steps Section -->
-        <div class="mb-6">
-          <h4 class="text-md font-semibold mb-4">Process Steps:</h4>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="text-center p-4 bg-base-200 rounded-lg">
-              <div class="bg-primary rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-3">
-                <span class="text-primary-content font-bold text-sm">1</span>
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold mb-3">Process:</h4>
+          <div class="grid grid-cols-3 gap-2 text-xs">
+            <div class="text-center p-2 bg-base-200 rounded">
+              <div class="bg-primary rounded-full w-6 h-6 flex items-center justify-center mx-auto mb-2">
+                <span class="text-primary-content font-bold text-xs">1</span>
               </div>
-              <h5 class="font-semibold mb-2">Paste Job Description</h5>
-              <p class="text-sm text-base-content/70">
-                Copy and paste the job description you're interested in applying for
+              <h5 class="font-semibold mb-1 text-xs">Job Description</h5>
+              <p class="text-xs text-base-content/70">
+                Paste job posting
               </p>
             </div>
-            <div class="text-center p-4 bg-base-200 rounded-lg">
-              <div class="bg-primary rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-3">
-                <span class="text-primary-content font-bold text-sm">2</span>
+            <div class="text-center p-2 bg-base-200 rounded">
+              <div class="bg-primary rounded-full w-6 h-6 flex items-center justify-center mx-auto mb-2">
+                <span class="text-primary-content font-bold text-xs">2</span>
               </div>
-              <h5 class="font-semibold mb-2">Add Your Resume</h5>
-              <p class="text-sm text-base-content/70">
-                Paste your resume text or upload your resume document
+              <h5 class="font-semibold mb-1 text-xs">Resume Text</h5>
+              <p class="text-xs text-base-content/70">
+                Add your resume
               </p>
             </div>
-            <div class="text-center p-4 bg-base-200 rounded-lg">
-              <div class="bg-primary rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-3">
-                <span class="text-primary-content font-bold text-sm">3</span>
+            <div class="text-center p-2 bg-base-200 rounded">
+              <div class="bg-primary rounded-full w-6 h-6 flex items-center justify-center mx-auto mb-2">
+                <span class="text-primary-content font-bold text-xs">3</span>
               </div>
-              <h5 class="font-semibold mb-2">Get AI Analysis</h5>
-              <p class="text-sm text-base-content/70">
-                Our Cat AI analyzes the match and provides detailed feedback
+              <h5 class="font-semibold mb-1 text-xs">AI Analysis</h5>
+              <p class="text-xs text-base-content/70">
+                Get match score
               </p>
             </div>
           </div>
         </div>
 
         <!-- Analysis Categories -->
-        <div class="mb-6">
-          <h4 class="text-md font-semibold mb-3">What Cat AI analyzes:</h4>
-          <ul class="space-y-2">
-            <li class="flex items-start gap-2">
-              <span class="badge badge-error badge-sm mt-1">VITAL</span>
-              <div>
-                <strong>Technical Skills:</strong> Programming languages, frameworks, tools, and technologies
-              </div>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="badge badge-warning badge-sm mt-1">AVERAGE</span>
-              <div>
-                <strong>Abilities:</strong> Soft skills like communication, leadership, problem-solving
-              </div>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="badge badge-neutral badge-sm mt-1">LOW</span>
-              <div>
-                <strong>Keywords:</strong> Industry terms, methodologies, and buzzwords
-              </div>
-            </li>
-            <li class="flex items-start gap-2">
-              <span class="badge badge-secondary badge-sm mt-1">TITLE</span>
-              <div>
-                <strong>Qualifications:</strong> Education, certifications, and job titles
-              </div>
-            </li>
-          </ul>
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold mb-2">Analysis Categories:</h4>
+          <div class="space-y-1 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="badge badge-error badge-xs p-1">VITAL</span>
+              <span>Technical Skills</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="badge badge-warning badge-xs p-1">AVG</span>
+              <span>Soft Skills</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="badge badge-neutral badge-xs p-1">LOW</span>
+              <span>Keywords</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="badge badge-secondary badge-xs p-1">TITLE</span>
+              <span>Qualifications</span>
+            </div>
+          </div>
         </div>
 
         <!-- Scoring System -->
-        <div class="mb-6">
-          <h4 class="text-md font-semibold mb-3">Scoring system:</h4>
-          <div class="grid grid-cols-2 gap-4 text-sm">
-            <div class="flex items-center gap-2">
-              <div class="w-4 h-4 bg-green-500 rounded"></div>
-              <span>80-100: Excellent Match</span>
+        <div class="mb-4">
+          <h4 class="text-sm font-semibold mb-2">Score Ranges:</h4>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="flex items-center gap-1">
+              <div class="w-3 h-3 bg-green-500 rounded"></div>
+              <span>80-100: Excellent</span>
             </div>
-            <div class="flex items-center gap-2">
-              <div class="w-4 h-4 bg-yellow-500 rounded"></div>
-              <span>60-79: Good Match</span>
+            <div class="flex items-center gap-1">
+              <div class="w-3 h-3 bg-yellow-500 rounded"></div>
+              <span>60-79: Good</span>
             </div>
-            <div class="flex items-center gap-2">
-              <div class="w-4 h-4 bg-orange-500 rounded"></div>
-              <span>40-59: Fair Match</span>
+            <div class="flex items-center gap-1">
+              <div class="w-3 h-3 bg-orange-500 rounded"></div>
+              <span>40-59: Fair</span>
             </div>
-            <div class="flex items-center gap-2">
-              <div class="w-4 h-4 bg-red-500 rounded"></div>
-              <span>0-39: Poor Match</span>
+            <div class="flex items-center gap-1">
+              <div class="w-3 h-3 bg-red-500 rounded"></div>
+              <span>0-39: Poor</span>
             </div>
           </div>
         </div>
@@ -182,7 +172,7 @@ import { ScanResultComponent, ScanResultData } from './components/scan-result.co
         <!-- Modal Actions -->
         <div class="modal-action">
           <form method="dialog">
-            <button class="btn btn-primary">Got it!</button>
+            <button class="btn btn-sm btn-primary">Got it!</button>
           </form>
         </div>
       </div>
@@ -199,40 +189,15 @@ export class CatScanComponent implements OnInit {
   resumeText = '';
   isScanning = false;
   scanResult: ScanResultData | null = null;
-  showInfoModal = false;
 
   ngOnInit() {
     // Remove auto-generation of mock data on init
-  }
-
-  openInfoModal() {
-    this.showInfoModal = true;
-  }
-
-  closeInfoModal() {
-    this.showInfoModal = false;
   }
 
   scanResume() {
     if (!this.jobDescription || !this.resumeText || this.isScanning) {
       return;
     }
-
-    this.isScanning = true;
-
-    // Simulate API call with mock data
-    setTimeout(() => {
-      this.scanResult = this.generateMockScanResult();
-      this.isScanning = false;
-
-      // Scroll to results
-      setTimeout(() => {
-        const resultsElement = document.querySelector('app-scan-result');
-        if (resultsElement) {
-          resultsElement.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    }, 3000);
   }
 
   private generateMockScanResult(): ScanResultData {
