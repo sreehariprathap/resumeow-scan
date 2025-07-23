@@ -1,23 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ScanResultComponent, ScanResultData } from './components/scan-result.component';
+import { GlobalResumeService } from '../resumes/services/global-resume.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import {
+  faInfoCircle,
+  faArrowLeft,
+  faLock,
+  faSpinner
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-cat-scan',
   standalone: true,
-  imports: [CommonModule, FormsModule, ScanResultComponent],
+  imports: [CommonModule, FormsModule, ScanResultComponent, FontAwesomeModule],
   template: `
     <div class="min-h-screen bg-background">
       <!-- Header Section -->
       <div class="bg-card">
         <div class="container mx-auto px-6 py-8">
           <div class="flex items-center justify-between">
-            <div class="text-left">
-              <h1 class="text-lg font-bold text-foreground">Cat AI Resume Scanner</h1>
-              <p class="text-sm text-muted-foreground">
-                Get instant AI-powered analysis of how well your resume matches any job description
-              </p>
+            <div class="flex items-center gap-4">
+              <button
+                *ngIf="isFromGlobalResumes"
+                class="btn btn-ghost btn-circle"
+                (click)="goBackToGlobal()">
+                <fa-icon [icon]="'arrow-left'" class="w-6 h-6"></fa-icon>
+              </button>
+              <div class="text-left">
+                <h1 class="text-lg font-bold text-foreground">Cat AI Resume Scanner</h1>
+                <p class="text-sm text-muted-foreground">
+                  Get instant AI-powered analysis of how well your resume matches any job description
+                  <span *ngIf="isFromGlobalResumes" class="badge badge-outline badge-sm ml-2">Using Global Resume</span>
+                </p>
+              </div>
             </div>
             <div>
               <button
@@ -25,9 +44,7 @@ import { ScanResultComponent, ScanResultData } from './components/scan-result.co
                 onclick="info_modal.showModal()"
                 title="How it works"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-                </svg>
+                <fa-icon [icon]="'info-circle'" class="w-6 h-6"></fa-icon>
               </button>
             </div>
           </div>
@@ -35,9 +52,9 @@ import { ScanResultComponent, ScanResultData } from './components/scan-result.co
       </div>
 
       <!-- Main Content -->
-      <div class="container mx-auto px-6 ">
+      <div class="container mx-auto px-6">
         <!-- Input Section -->
-        <div class="max-w-6xl mx-auto">
+        <div class="mx-auto">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Job Description Input -->
             <div class="space-y-4">
@@ -56,13 +73,20 @@ import { ScanResultComponent, ScanResultData } from './components/scan-result.co
             <div class="space-y-4">
               <label for="resumeText" class="block text-sm font-medium">
                 Resume Text
+                <span *ngIf="isFromGlobalResumes" class="text-xs text-base-content/60">(Pre-loaded from Global Database)</span>
               </label>
               <textarea
                 id="resumeText"
                 [(ngModel)]="resumeText"
                 class="textarea textarea-bordered w-full h-64 resize-none"
+                [class.textarea-disabled]="isFromGlobalResumes"
+                [readonly]="isFromGlobalResumes"
                 placeholder="Paste your resume text here..."
               ></textarea>
+              <div *ngIf="isFromGlobalResumes" class="text-xs text-base-content/60 flex items-center gap-2">
+                <fa-icon [icon]="'lock'" class="w-4 h-4"></fa-icon>
+                This resume is loaded from the global database and cannot be edited here.
+              </div>
             </div>
           </div>
 
@@ -73,7 +97,7 @@ import { ScanResultComponent, ScanResultData } from './components/scan-result.co
               (click)="scanResume()"
               [disabled]="!jobDescription || !resumeText || isScanning"
             >
-              <span *ngIf="isScanning" class="loading loading-spinner loading-sm"></span>
+              <fa-icon *ngIf="isScanning" [icon]="'spinner'" class="animate-spin"></fa-icon>
               {{ isScanning ? 'Scanning...' : 'Ask Cat AI to Scan' }}
             </button>
           </div>
@@ -189,9 +213,33 @@ export class CatScanComponent implements OnInit {
   resumeText = '';
   isScanning = false;
   scanResult: ScanResultData | null = null;
+  isFromGlobalResumes = false;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private globalResumeService: GlobalResumeService,
+    private faLibrary: FaIconLibrary
+  ) {
+    faLibrary.addIcons(faInfoCircle, faArrowLeft, faLock, faSpinner);
+  }
 
   ngOnInit() {
-    // Remove auto-generation of mock data on init
+    // Check for query parameters to pre-populate resume
+    this.route.queryParams.subscribe(params => {
+      if (params['resumeId'] && params['source'] === 'global') {
+        this.isFromGlobalResumes = true;
+        const resumeId = parseInt(params['resumeId']);
+        const resume = this.globalResumeService.getResumeById(resumeId);
+        if (resume) {
+          this.resumeText = resume.resume_str;
+        }
+      }
+    });
+  }
+
+  goBackToGlobal() {
+    this.router.navigate(['/resumes/global']);
   }
 
   scanResume() {
